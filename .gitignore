@@ -1,0 +1,10 @@
+Debug/
+assignment_problem/Debug/
+assignment_problem.VC.VC.opendb
+assignment_problem.VC.db
+output.txt
+assignment_problem/assignment_problem.vcxproj
+# assignment_problem/assignment_problem.vcxproj
+.vs/
+assignment_problem.VC
+assignment_problem.sln
