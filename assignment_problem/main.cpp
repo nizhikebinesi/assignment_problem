@@ -89,7 +89,34 @@ void hungarian_very_slow(Matrix c) {
 	// step #3
 	size_t k = 0;
 	while (k != c.size) {
+		
 		for (size_t i = 0; i < c.size; i++) {
+
+			for (size_t j = 0; j < c.zeros_in_line.size(); j++) {
+				sort(c.zeros_in_line[j].id_of_zeros.begin(),
+					c.zeros_in_line[j].id_of_zeros.end());
+			}
+			sort(c.zeros_in_line.begin(), c.zeros_in_line.end(), z_cmp);
+
+			// step #3.1
+			for (size_t j = 0; j < c.zeros_in_line.size(); j++) {
+				if (c.zeros_in_line[j].id_of_zeros.size() == ZERO) {
+					continue;
+				}
+				
+				c.matr[j][c.zeros_in_line[j].id_of_zeros[0]].is_colored = true;
+				for (size_t k = 1; k < c.zeros_in_line[j].id_of_zeros.size(); k++) {
+					c.matr[j][c.zeros_in_line[j].id_of_zeros[k]].is_cross_out_in_line 
+						= true;
+				}
+				// напиши вычеркивание по столбцам 
+				// и то, что вычеркнуто по обоим признакам
+				// а также шаги 3.2, 3.3, 3.4 и 4
+			}
+		}
+
+
+		/*for (size_t i = 0; i < c.size; i++) {
 			for (size_t j = 0; j < c.zeros_in_line.size(); j++) {
 				sort(c.zeros_in_line[j].id_of_zeros.begin(), 
 					c.zeros_in_line[j].id_of_zeros.end());
@@ -108,11 +135,8 @@ void hungarian_very_slow(Matrix c) {
 
 				}
 			}
-			/*size_t id =
-				*min_element(c.count_of_zeros_in_line.begin(),
-					c.count_of_zeros_in_line.end());*/
 			
-		}
+		}*/
 	}
 }
 
