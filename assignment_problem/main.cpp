@@ -38,13 +38,10 @@ struct CmpByCountOfZeros {
 	}
 } z_cmp;
 
-struct CmpByIds {
-
-} id_cmp;
-
 struct Matrix {
 	vector<vector<Element>> matr;
-	vector<vector<Identifier>> zeros_in_line;
+	vector<Identifier> zeros_in_line;
+	//vector<vector<Identifier>> zeros_in_line;
 	// vector<vector<size_t>> zeros_in_line;
 	// vector<size_t> count_of_zeros_in_column, 
 	//	count_of_zeros_in_line;
@@ -61,9 +58,10 @@ void hungarian_very_slow(Matrix c) {
 		for (size_t j = 0; j < c.size; j++) {
 			c.matr[i][j].key -= min;
 			if (!c.matr[i][j].is_counted && c.matr[i][j].key == ZERO) {
+				c.zeros_in_line[i].id_of_zeros.push_back(j);
 				// c.zeros_in_line[i].push_back(Identifier(i, j));
-				//c.zeros_in_line[i].push_back(j);
-				//c.count_of_zeros_in_line[i]++;
+				// c.zeros_in_line[i].push_back(j);
+				// c.count_of_zeros_in_line[i]++;
 				c.matr[i][j].is_counted = true;
 			}
 		}
@@ -79,9 +77,10 @@ void hungarian_very_slow(Matrix c) {
 		for (size_t j = 0; j < c.size; j++) {
 			c.matr[j][i].key -= min;
 			if (!c.matr[j][i].is_counted && c.matr[j][i].key == ZERO) {
+				c.zeros_in_line[j].id_of_zeros.push_back(i);
 				// c.zeros_in_line[j].push_back(Identifier(j, i));
 				// c.zeros_in_line[j].push_back(i);
-				//c.count_of_zeros_in_line[j]++;
+				// c.count_of_zeros_in_line[j]++;
 				c.matr[j][i].is_counted = true;
 			}
 		}
@@ -91,10 +90,22 @@ void hungarian_very_slow(Matrix c) {
 	size_t k = 0;
 	while (k != c.size) {
 		for (size_t i = 0; i < c.size; i++) {
-			sort(c.zeros_in_line.begin(), c.zeros_in_line.end(), id_cmp);
+			for (size_t j = 0; j < c.zeros_in_line.size(); j++) {
+				sort(c.zeros_in_line[j].id_of_zeros.begin(), 
+					c.zeros_in_line[j].id_of_zeros.end());
+			}
+			sort(c.zeros_in_line.begin(), c.zeros_in_line.end(), z_cmp);
 			for (size_t j = 0; j < c.size; j++) {
-				if (c.zeros_in_line[j].size() == ZERO) {
-					
+				
+				//if (c.zeros_in_line[j].size() == ZERO) {
+				if (c.zeros_in_line[j].id_of_zeros.size() == ZERO) {
+					continue;
+				}
+
+				c.matr[j][c.zeros_in_line[j].id_of_zeros[0]].is_colored = true;
+
+				for (size_t k = 1; k < c.zeros_in_line[j].id_of_zeros.size(); k++) {
+
 				}
 			}
 			/*size_t id =
